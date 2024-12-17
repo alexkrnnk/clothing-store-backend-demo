@@ -1,13 +1,11 @@
 # Sport Styles
 
-Welcome to the Sport Styles project repository! This is a web application dedicated to a clothes shop for sporting apparel and accessories. The project is structured into two main directories: `frontend` (a React application) and `backend` (a Node.js + Express server).
+Welcome to the repository of the Sport Styles project! This is a backend web application dedicated to a sportswear and accessories store. The basis of the project is `backend` (server on Node.js + Express).
 
 ## Features
 
-- **React Frontend**: Modern and responsive UI for showcasing sports clothing and accessories.
 - **Node.js Backend**: Robust server-side handling with Express framework.
 - **JWT Authentication**: Secure login and authentication for users.
-- **SEO Ready**: SEO optimizations for better search engine rankings.
 - **MySQL Database**: Reliable database management for storing user and product data.
 
 ## Prerequisites
@@ -24,20 +22,13 @@ To get this project running locally, follow these steps:
 ### Clone the repository
 
 ```bash
-git clone https://github.com/BPJam/clothes-shop.git
-cd clothes-shop
+git clone https://github.com/alexkrnnk/node-backend-clothes-shop
+cd backend
 ```
 
 ### Install dependencies
 
-You need to install dependencies for both the frontend and backend.
-
-```bash
-# Install frontend dependencies
-cd frontend
-npm install
-cd ..
-```
+You need to install dependencies for backend.
 
 ```bash
 # Install backend dependencies
@@ -48,7 +39,7 @@ cd ..
 
 ### Configure the environment
 
-Create `.env` files in the `frontend` and `backend` directories to store your environment-specific configurations like database credentials, API keys, etc. Each directory contains a sample `.env` file to guide you:
+Create `.env` file in the`backend` directory to store your environment-specific configurations like database credentials, API keys, etc. Each directory contains a sample `.env` file to guide you:
 
 - **Backend**: You'll find an example `.env` file named `.env.example` in the `backend` directory. Copy this file and adjust the values as needed.
   
@@ -56,25 +47,19 @@ Create `.env` files in the `frontend` and `backend` directories to store your en
 cp backend/.env.example backend/.env
 ```
 
-- **Frontend**: There is a sample .env file in the frontend directory called .sample.env. Copy this file and modify the contents to fit your environment settings.
-
-```bash
-cp frontend/.sample.env frontend/.env
-```
-
 By setting up these .env files, you ensure that your application can access necessary environment variables while keeping sensitive information out of version control.
 
-## Running the application
+## Running the Backend
 
-You can run the entire stack (frontend and backend) using:
+You can run the backend server in development mode using:
 
 ```bash
 npm run dev
 ```
 
-This uses concurrently to launch both the React application and Node.js server in development mode.
+This command starts the Node.js server with tools like nodemon for live-reloading during development.
 
-For production environments, you should build the frontend and start only the backend server:
+For production environments, use the following command to start the server:
 
 ```bash
 npm start
@@ -82,7 +67,7 @@ npm start
 
 ## Usage
 
-The frontend React app can be accessed at http://localhost:3000 by default, and the backend services will be available at http://localhost:8080.
+The backend services will be available at http://localhost:8080 by default. Make sure your .env file is correctly configured to connect to any required databases or external services.
 
 ## Contributing
 
@@ -100,13 +85,11 @@ All rights to the source code, documentation, and related materials are reserved
 
 For any inquiries, licensing questions, or other concerns, please contact us at:
 
-- Email: [office@bp-jam.com](mailto:your-email@example.com)
-- Project Link: [clothes-shop](https://github.com/BPJam/clothes-shop)
-- Production Link: [clothes-shop-lime.vercel.app/](https://clothes-shop-lime.vercel.app/)
+- Email: [kornienkosasha2003@gmail.com](mailto:your-email@example.com)
+- Project Link: [clothes-shop](https://github.com/alexkrnnk/node-backend-clothes-shop)
 
 ## Acknowledgements
 - [Node.js](https://nodejs.org)
-- [React](https://react.dev)
 - [MySQL](https://www.mysql.com)
 - [JWT](https://jwt.io)
 - [Express](https://expressjs.com)
