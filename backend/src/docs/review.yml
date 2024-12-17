@@ -1,0 +1,326 @@
+paths:
+  /reviews/:
+    get:
+      summary: Get all reviews
+      tags:
+        - Review
+      responses:
+        '200':
+          description: Reviews successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Review ID
+                        userId:
+                          type: integer
+                          description: User ID
+                        productId:
+                          type: integer
+                          description: Product ID
+                        text:
+                          type: string
+                          description: Review text
+                        rate:
+                          type: integer
+                          description: Review rating
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Date and time of review creation
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Date and time of last review update
+                    example:
+                      - id: 3
+                        userId: 1
+                        productId: 2
+                        text: "text"
+                        rate: 3
+                        createdAt: "2024-04-29T23:52:40.000Z"
+                        updatedAt: "2024-04-29T23:52:40.000Z"
+                      - id: 4
+                        userId: 1
+                        productId: 2
+                        text: "text"
+                        rate: 3
+                        createdAt: "2024-04-29T23:56:20.000Z"
+                        updatedAt: "2024-04-29T23:56:20.000Z"
+                      - id: 5
+                        userId: 1
+                        productId: 2
+                        text: "text"
+                        rate: 3
+                        createdAt: "2024-04-29T23:56:20.000Z"
+                        updatedAt: "2024-04-29T23:56:20.000Z"
+        '404':
+          description: Reviews not founded
+    post:
+      summary: Create a review
+      tags:
+        - Review
+      parameters:
+        - in: header
+          name: token
+          required: true
+          schema:
+            type: string
+          description: Token of a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Review's text
+                  example: text
+                rate:
+                  type: integer
+                  pattern: '^[1-5]$'
+                  description: Feedback rating (1 to 5)
+                  example: 3
+                productId:
+                  type: integer
+                  description: Identifier of the product to which the recall relates
+                  example: 2
+      responses:
+        '200':
+          description: Feedback has been successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: Review created successfully
+        '401':
+          description: Unauthorized user
+  /reviews/:id:
+    get:
+      summary: Get review by id
+      tags:
+        - Review
+      parameters:
+        - in: params
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Review's id
+      requestBody:
+      responses:
+        '200':
+          description: Review selected successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the review
+                      userId:
+                        type: integer
+                        description: The ID of the user who created the review
+                      productId:
+                        type: integer
+                        description: The ID of the product being reviewed
+                      text:
+                        type: string
+                        description: The text content of the review
+                      rate:
+                        type: integer
+                        description: The rating given in the review
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: The date and time when the review was created
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: The date and time when the review was last updated
+                    example:
+                      id: 4
+                      userId: 1
+                      productId: 2
+                      text: "text"
+                      rate: 3
+                      createdAt: "2024-04-29T23:56:20.000Z"
+                      updatedAt: "2024-04-29T23:56:20.000Z"
+    patch:
+      summary: Update a review
+      tags:
+        - Review
+      parameters:
+        - in: params
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Review's id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Review's text
+                  example: text
+                rate:
+                  type: integer
+                  pattern: '^[1-5]$'
+                  description: Feedback rating (1 to 5)
+                  example: 3
+                productId:
+                  type: integer
+                  description: Identifier of the product to which the recall relates
+                  example: 2
+      responses:
+        '200':
+          description: Review updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Review updated successfully"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+    delete:
+      summary: Delete a review
+      tags:
+        - Review
+      parameters:
+        - in: params
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Review's id
+      responses:
+        '200':
+          description: Review deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Deleted 1 review with ID 1"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+  /reviews/product/:productId:
+    get:
+      summary: Get reviews by product's id
+      tags:
+        - Review
+      parameters:
+        - in: params
+          name: productId
+          required: true
+          schema:
+            type: string
+          description: Product's id
+      requestBody:
+      responses:
+        '200':
+          description: Reviews successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Review ID
+                        userId:
+                          type: integer
+                          description: User ID
+                        productId:
+                          type: integer
+                          description: Product ID
+                        text:
+                          type: string
+                          description: Review text
+                        rate:
+                          type: integer
+                          description: Review rating
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Date and time of review creation
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Date and time of last review update
+                    example:
+                      - id: 3
+                        userId: 1
+                        productId: 2
+                        text: "text"
+                        rate: 3
+                        createdAt: "2024-04-29T23:52:40.000Z"
+                        updatedAt: "2024-04-29T23:52:40.000Z"
+                      - id: 4
+                        userId: 1
+                        productId: 2
+                        text: "text"
+                        rate: 3
+                        createdAt: "2024-04-29T23:56:20.000Z"
+                        updatedAt: "2024-04-29T23:56:20.000Z"
+                      - id: 5
+                        userId: 1
+                        productId: 2
+                        text: "text"
+                        rate: 3
+                        createdAt: "2024-04-29T23:56:20.000Z"
+                        updatedAt: "2024-04-29T23:56:20.000Z"

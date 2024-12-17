@@ -1,0 +1,102 @@
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address of the user
+                  format: email
+                password:
+                  type: string
+                  example: 432432fdssdf!@
+                  description: User password
+                name:
+                  type: string
+                  example: John
+                  description: User's first name
+                lastname:
+                  type: string
+                  example: Libe
+                  description: User's last name
+                phone:
+                  type: string
+                  example: "+1234567890"
+                  description: User's phone number
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "User created successfully"
+        '409':
+          description: User with this email already exists
+  /auth/login:
+    post:
+      summary: Log in a user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address of the user
+                  format: email
+                password:
+                  type: string
+                  example: 432423432fdsfsd@!
+                  description: User password
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: object
+                    properties:
+                      userData:
+                        type: object
+                        properties:
+                          userId:
+                            type: integer
+                            example: 1
+                          email:
+                            type: string
+                            example: "fdsfdsfsd2003@gmail.com"
+                          role:
+                            type: string
+                            example: "USER"
+                      token:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiZmRzZmRzZnNkMjAwM0BnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcxNDM0MDM1OSwiZXhwIjoxNzE2OTMyMzU5fQ.kSmvZYDK6E01F2mm9wk6D7k7zXKJjvNBttrCLhBkNfg"
+        '400':
+          description: Password do not match
+        '404':
+          description: User with this email not exist

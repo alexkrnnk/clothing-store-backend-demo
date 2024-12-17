@@ -1,0 +1,480 @@
+paths:
+  /categories/:
+    get:
+      summary: Get all categories
+      tags:
+        - Category
+      responses:
+        '200':
+          description: Successfully retrieved all categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+              example:
+                status: 200
+                values:
+                  - id: 1
+                    titleUA: Назва українською
+                    titleENG: Title ENG
+                    imagePath: 1714398689982.png
+                    parentID: null
+                    createdAt: "2024-04-24T19:04:51.000Z"
+                    updatedAt: "2024-04-24T19:04:51.000Z"
+                  - id: 2
+                    titleUA: Назва українською
+                    titleENG: Title ENG
+                    imagePath: 1714398689982.png
+                    parentID: 1
+                    createdAt: "2024-04-24T19:04:51.000Z"
+                    updatedAt: "2024-04-24T19:04:51.000Z"
+        '404':
+          description: Categories not found
+        '500':
+          description: Error selecting categories
+    post:
+      summary: Create a new category
+      tags:
+        - Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titleENG:
+                  type: string
+                  example: Title ENG
+                titleUA:
+                  type: string
+                  example: Назва українською
+                image:
+                  type: string
+                  example: 1714398689982.png
+                parentId:
+                  oneOf:
+                    - type: integer
+                    - type: null
+                  example: null
+      responses:
+        '200':
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Category created successfully"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error creating category      
+  /category/getById/{id}:
+    get:
+      summary: Get category by id
+      tags:
+        - Category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the category to retrieve
+      responses:
+        '200':
+          description: Successfully retrieved the category by Id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+              example:
+                status: 200
+                values:
+                    id: 1
+                    titleENG: Title ENG
+                    titleUA: Назва українською
+                    imagePath: 1714398689982.png
+                    parentID: null
+                    createdAt: "2024-04-24T19:04:51.000Z"
+                    updatedAt: "2024-04-24T19:04:51.000Z"
+        '404':
+          description: Category not found
+        '500':
+          description: Error selecting category
+    patch:
+      summary: Update a category
+      tags:
+        - Category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the category to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titleENG:
+                  type: string
+                  example: Title ENG
+                titleUA:
+                  type: string
+                  example: Назва українською
+                image:
+                  type: string
+                  example: 1714398689982.png
+                parentId:
+                  oneOf:
+                    - type: integer
+                    - type: null
+                  example: null
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Category updated successfully"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error updated category
+    delete:
+      summary: Delete a category
+      tags:
+        - Category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the category to delete
+      responses:
+        '200':
+          description: Category deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Deleted 1 categories with ID 2"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error deleted category
+  /category/getAllHeadWithNested:
+    get:
+      summary: Get all head categories with nested categories
+      tags:
+        - Category
+      responses:
+        '200':
+          description: Successfully retrieved all head categories with nested categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        titleENG:
+                          type: string
+                          example: Title ENG
+                        titleUA:
+                          type: string
+                          example: Назва українською
+                        imagePath:
+                          type: string
+                          example: 1714399093905.png
+                        parentId:
+                          type: integer
+                          nullable: true
+                          example: null
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-04-29T13:58:13.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2024-04-29T13:58:13.000Z"
+                        subcategories:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 6
+                              titleENG:
+                                type: string
+                                example: Title ENG
+                              titleUA:
+                                type: string
+                                example: Назва українською
+                              imagePath:
+                                type: string
+                                example: 1714407446739.png
+                              parentId:
+                                type: integer
+                                example: 3
+                              createdAt:
+                                type: string
+                                format: date-time
+                                example: "2024-04-29T16:17:26.000Z"
+                              updatedAt:
+                                type: string
+                                format: date-time
+                                example: "2024-04-29T16:17:26.000Z"
+              example:
+                  status: 200
+                  values:
+                    - id: 3
+                      titleENG: Title ENG
+                      titleUA: Назва українською
+                      imagePath: 1714399093905.png
+                      parentId: null
+                      createdAt: "2024-04-29T13:58:13.000Z"
+                      updatedAt: "2024-04-29T13:58:13.000Z"
+                      subcategories:
+                        - id: 6
+                          titleENG: Title ENG
+                          titleUA: Назва українською
+                          imagePath: 1714407446739.png
+                          parentId: 3
+                          createdAt: "2024-04-29T16:17:26.000Z"
+                          updatedAt: "2024-04-29T16:17:26.000Z"
+                        - id: 7
+                          titleENG: Title ENG
+                          titleUA: Назва українською
+                          imagePath: 1714407448566.png
+                          parentId: 3
+                          createdAt: "2024-04-29T16:17:28.000Z"
+                          updatedAt: "2024-04-29T16:17:28.000Z"
+        '404':
+          description: Categories with nested categories and head categories not founded
+        '500':
+          description: Error selecting categories with nested categories
+  /category/getAllNestedByHeadId:
+    get:
+      summary: Get all head categories with nested categories
+      tags:
+        - Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parentId: 
+                  type: integer
+                  example: 3
+      responses:
+        '200':
+          description: Successfully retrieved all nested categories by head category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        titleENG:
+                          type: string
+                          example: Title ENG
+                        titleUA:
+                          type: string
+                          example: Назва українською
+                        imagePath:
+                          type: string
+                          example: 1714399093905.png
+                        parentId:
+                          type: integer
+                          nullable: true
+                          example: null
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-04-29T13:58:13.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2024-04-29T13:58:13.000Z"
+                        subcategories:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 6
+                              titleENG:
+                                type: string
+                                example: Title ENG
+                              titleUA:
+                                type: string
+                                example: Назва українською
+                              imagePath:
+                                type: string
+                                example: 1714407446739.png
+                              parentId:
+                                type: integer
+                                example: 3
+                              createdAt:
+                                type: string
+                                format: date-time
+                                example: "2024-04-29T16:17:26.000Z"
+                              updatedAt:
+                                type: string
+                                format: date-time
+                                example: "2024-04-29T16:17:26.000Z"
+              example:
+                  status: 200
+                  values:
+                    - id: 3
+                      titleENG: Title ENG
+                      titleUA: Назва українською
+                      imagePath: 1714399093905.png
+                      parentId: null
+                      createdAt: "2024-04-29T13:58:13.000Z"
+                      updatedAt: "2024-04-29T13:58:13.000Z"
+                      subcategories:
+                        - id: 6
+                          titleENG: Title ENG
+                          titleUA: Назва українською
+                          imagePath: 1714407446739.png
+                          parentId: 3
+                          createdAt: "2024-04-29T16:17:26.000Z"
+                          updatedAt: "2024-04-29T16:17:26.000Z"
+                        - id: 7
+                          titleENG: Title ENG
+                          titleUA: Назва українською
+                          imagePath: 1714407448566.png
+                          parentId: 3
+                          createdAt: "2024-04-29T16:17:28.000Z"
+                          updatedAt: "2024-04-29T16:17:28.000Z"
+        '404':
+          description: Nested categories not founded
+        '500':
+          description: Error selecting nested categories
+  /category/getAllHead:
+    get:
+      summary: Get all head categories
+      tags:
+        - Category
+      responses:
+        '200':
+          description: Successfully retrieved all head categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3
+                        titleENG:
+                          type: string
+                          example: Title ENG
+                        titleUA:
+                          type: string
+                          example: Назва українською
+                        imagePath:
+                          type: string
+                          example: 1714399093905.png
+                        parentId:
+                          type: integer
+                          nullable: true
+                          example: null
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-04-29T13:58:13.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2024-04-29T13:58:13.000Z"
+              examples:
+                nestedCategories:
+                  value:
+                    status: 200
+                    values:
+                      - id: 3
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        imagePath: 1714399093905.png
+                        parentId: null
+                        createdAt: "2024-04-29T13:58:13.000Z"
+                        updatedAt: "2024-04-29T13:58:13.000Z"
+        '404':
+          description: Head categories not founded
+        '500':
+          description: Error selecting head categories

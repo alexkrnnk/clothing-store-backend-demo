@@ -1,0 +1,672 @@
+paths:
+  /products/:
+    get:
+      summary: Get all products
+      tags:
+        - Product
+      requestBody:
+      responses:
+        '200':
+          description: Successfully retrieved products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        titleENG:
+                          type: string
+                        titleUA:
+                          type: string
+                        descriptionENG:
+                          type: string
+                        descriptionUA:
+                          type: string
+                        size:
+                          type: string
+                        article:
+                          type: integer
+                        quantity:
+                          type: integer
+                        price:
+                          type: string
+                          pattern: '^\d+(\.\d{1,2})?$'
+                        price_old:
+                          type: string
+                          pattern: '^\d+(\.\d{1,2})?$'
+                        categoryId:
+                          type: integer
+                        status:
+                          type: string
+                          enum:
+                            - IN_STOCK
+                            - NOT_AVAILABLE
+                            - DELIVERY_AWAITED
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                example:
+                  status: 200
+                  values:
+                    - id: 2
+                      titleENG: fdsfsdfsd
+                      titleUA: авіаіваів
+                      descriptionENG: fdsfsdfsdfd
+                      descriptionUA: '432423432'
+                      size: XL
+                      article: 432423432
+                      quantity: 10
+                      price: '20.00'
+                      price_old: '15.00'
+                      categoryId: 3
+                      status: IN_STOCK
+                      createdAt: '2024-04-29T18:06:50.000Z'
+                      updatedAt: '2024-04-29T18:06:50.000Z'
+                    - id: 3
+                      titleENG: fdsfsdfsd
+                      titleUA: авіаіваів
+                      descriptionENG: fdsfsdfsdfd
+                      descriptionUA: '432423432'
+                      size: XL
+                      article: 432
+                      quantity: 10
+                      price: '20.00'
+                      price_old: '15.00'
+                      categoryId: 3
+                      status: IN_STOCK
+                      createdAt: '2024-04-29T18:52:36.000Z'
+                      updatedAt: '2024-04-29T18:52:36.000Z'
+    post:
+      summary: Create a product
+      tags:
+        - Product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titleENG:
+                  type: string
+                  example: Title ENG
+                titleUA:
+                  type: string
+                  example: Назва українською
+                descriptionENG:
+                  type: string
+                  example: English desc
+                descriptionUA:
+                  type: string
+                  example: Опис українською
+                size:
+                  type: string
+                  example: XL
+                article:
+                  type: integer
+                  example: 322
+                quantity:
+                  type: integer
+                  example: 20
+                price:
+                  type: number
+                  format: decimal
+                  example: 20
+                price_old:
+                  type: number
+                  format: decimal
+                  example: 30
+                categoryId:
+                  type: integer
+                  example: 1
+                status:
+                  type: string
+                  enum:
+                    - IN_STOCK
+                    - NOT_AVAILABLE
+                    - DELIVERY_AWAITED
+                  example: IN_STOCK
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Product created successfully"
+
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error creating product  
+  /products/:id:
+    get:
+      summary: Retrieve a product by ID
+      tags:
+        - Product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the product to retrieve
+      responses:
+        '200':
+          description: Successfully retrieved product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 2
+                      titleENG:
+                        type: string
+                        example: Title ENG
+                      titleUA:
+                        type: string
+                        example: Назва українською
+                      descriptionENG:
+                        type: string
+                        example: English desc
+                      descriptionUA:
+                        type: string
+                        example: Опис українською
+                      size:
+                        type: string
+                        example: XL
+                      article:
+                        type: integer
+                        example: 43242
+                      quantity:
+                        type: integer
+                        example: 10
+                      price:
+                        type: number
+                        format: decimal
+                        example: 20
+                      price_old:
+                        type: number
+                        format: decimal
+                        example: 30
+                      categoryId:
+                        type: integer
+                        example: 3
+                      status:
+                        type: string
+                        example: IN_STOCK
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: '2024-04-29T18:06:50.000Z'
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: '2024-04-29T18:06:50.000Z'
+                example:
+                  status: 200
+                  values:
+                    id: 2
+                    titleENG: fdsfsdfsd
+                    titleUA: авіаіваів
+                    descriptionENG: fdsfsdfsdfd
+                    descriptionUA: '432423432'
+                    size: XL
+                    article: 432423432
+                    quantity: 10
+                    price: '20.00'
+                    price_old: '15.00'
+                    categoryId: 3
+                    status: IN_STOCK
+                    createdAt: '2024-04-29T18:06:50.000Z'
+                    updatedAt: '2024-04-29T18:06:50.000Z'
+        '404':
+          description: Product not found
+    patch:
+      summary: Get all categories
+      tags:
+        - Product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the user to retrieve
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titleENG:
+                  type: string
+                  example: Title ENG
+                titleUA:
+                  type: string
+                  example: Назва українською
+                descriptionENG:
+                  type: string
+                  example: English desc
+                descriptionUA:
+                  type: string
+                  example: Опис українською
+                size:
+                  type: string
+                  example: XL
+                article:
+                  type: integer
+                  example: 322
+                quantity:
+                  type: integer
+                  example: 20
+                price:
+                  type: number
+                  format: decimal
+                  example: 20
+                price_old:
+                  type: number
+                  format: decimal
+                  example: 30
+                categoryId:
+                  type: integer
+                  example: 1
+                status:
+                  type: string
+                  enum:
+                    - IN_STOCK
+                    - NOT_AVAILABLE
+                    - DELIVERY_AWAITED
+                  example: IN_STOCK
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Product updated successfully"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error updating product  
+    delete:
+      summary: Get all categories
+      tags:
+        - Product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the user to update
+      responses:
+        '200':
+          description: Product deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Deleted 1 product with ID 1"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error deleting product   
+  /products/sales:
+    get:
+      summary: Get all products
+      tags:
+        - Product
+      parameters:
+        - in: query
+          name: offset
+          required: true
+          schema:
+            type: string
+          description: Page number
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: string
+          description: Number of objects per page
+      requestBody:
+      responses:
+        '200':
+          description: Successfully retrieved products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: object
+                    properties:
+                      meta:
+                        type: object
+                        properties:
+                          currentPage:
+                            type: integer
+                            example: 1
+                          totalItems:
+                            type: integer
+                            example: 12
+                          totalPages:
+                            type: integer
+                            example: 3
+                      values:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            titleENG:
+                              type: string
+                            titleUA:
+                              type: string
+                            descriptionENG:
+                              type: string
+                            descriptionUA:
+                              type: string
+                            size:
+                              type: string
+                            article:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: string
+                              pattern: '^\d+(\.\d{1,2})?$'
+                            price_old:
+                              type: string
+                              pattern: '^\d+(\.\d{1,2})?$'
+                            categoryId:
+                              type: integer
+                            status:
+                              type: string
+                              enum:
+                                - IN_STOCK
+                                - NOT_AVAILABLE
+                                - DELIVERY_AWAITED
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
+                            reviewCount:
+                              type: integer
+                            averageRating:
+                              type: integer
+                example:
+                  status: 200
+                  values:
+                    meta:
+                      currentPage: 1
+                      totalItems: 12
+                      totalPages: 3
+                    values:
+                      - id: 2
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 432423432
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:06:50.000Z'
+                        updatedAt: '2024-04-29T18:06:50.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+                      - id: 3
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 432
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:52:36.000Z'
+                        updatedAt: '2024-04-29T18:52:36.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+                      - id: 4
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 4325
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:53:32.000Z'
+                        updatedAt: '2024-04-29T18:53:32.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+                      - id: 5
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 43252
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:54:17.000Z'
+                        updatedAt: '2024-04-29T18:54:17.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+                      - id: 6
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 666
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:55:03.000Z'
+                        updatedAt: '2024-04-29T18:55:03.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+        '404':
+          description: Products not found
+  /products/category/:categoryId:
+    get:
+      summary: Get all products by category id
+      tags:
+        - Product
+      parameters:
+        - in: query
+          name: offset
+          required: true
+          schema:
+            type: string
+          description: Page number
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: string
+          description: Number of objects per page
+      requestBody:
+      responses:
+        '200':
+          description: Successfully retrieved products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: object
+                    properties:
+                      meta:
+                        type: object
+                        properties:
+                          currentPage:
+                            type: integer
+                            example: 1
+                          totalItems:
+                            type: integer
+                            example: 12
+                          totalPages:
+                            type: integer
+                            example: 3
+                      values:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            titleENG:
+                              type: string
+                            titleUA:
+                              type: string
+                            descriptionENG:
+                              type: string
+                            descriptionUA:
+                              type: string
+                            size:
+                              type: string
+                            article:
+                              type: integer
+                            quantity:
+                              type: integer
+                            price:
+                              type: string
+                              pattern: '^\d+(\.\d{1,2})?$'
+                            price_old:
+                              type: string
+                              pattern: '^\d+(\.\d{1,2})?$'
+                            categoryId:
+                              type: integer
+                            status:
+                              type: string
+                              enum:
+                                - IN_STOCK
+                                - NOT_AVAILABLE
+                                - DELIVERY_AWAITED
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
+                            reviewCount:
+                              type: integer
+                            averageRating:
+                              type: integer
+                example:
+                  status: 200
+                  values:
+                    meta:
+                      currentPage: 1
+                      totalItems: 12
+                      totalPages: 6
+                    values:
+                      - id: 2
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 432423432
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:06:50.000Z'
+                        updatedAt: '2024-04-29T18:06:50.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+                      - id: 3
+                        titleENG: Title ENG
+                        titleUA: Назва українською
+                        descriptionENG: English desc
+                        descriptionUA: Опис українською
+                        size: XL
+                        article: 432423
+                        quantity: 10
+                        price: '20.00'
+                        price_old: '15.00'
+                        categoryId: 3
+                        status: IN_STOCK
+                        createdAt: '2024-04-29T18:06:50.000Z'
+                        updatedAt: '2024-04-29T18:06:50.000Z'
+                        reviewCount: 0
+                        averageRating: 0
+        '404':
+          description: Products not found

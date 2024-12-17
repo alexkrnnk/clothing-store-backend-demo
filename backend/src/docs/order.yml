@@ -1,0 +1,425 @@
+paths:
+  /orders/:
+    get:
+      summary: Get all orders
+      tags:
+        - Order
+      responses:
+        '200':
+          description: Selected all orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        userId:
+                          type: integer
+                        totalSum:
+                          type: null
+                        name:
+                          type: string
+                        lastname:
+                          type: string
+                        phone:
+                          type: string
+                        deliveryMethod:
+                          type: string
+                        address:
+                          type: string
+                        comment:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                example:
+                  status: 200
+                  values:
+                    - id: 1
+                      userId: 1
+                      totalSum: null
+                      name: John
+                      lastname: Doe
+                      phone: "+1234567890"
+                      deliveryMethod: AFTERPAY
+                      address: "123 Main St, City, Country"
+                      comment: Please deliver in the evening
+                      status: NEW
+                      createdAt: "2024-04-29T21:44:58.000Z"
+                      updatedAt: "2024-04-29T21:44:58.000Z"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+    post:
+      summary: Create a new order
+      tags:
+        - Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                name:
+                  type: string
+                lastname:
+                  type: string
+                phone:
+                  type: string
+                deliveryMethod:
+                  type: string
+                address:
+                  type: string
+                comment:
+                  type: string
+                status:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: integer
+                      quantity:
+                        type: integer
+                      parameters:
+                        type: string
+            example:
+              userId: 1
+              name: John
+              lastname: Doe
+              phone: "1234567890"
+              deliveryMethod: AFTERPAY
+              address: "123 Main St"
+              comment: Please deliver in the evening
+              status: NEW
+              products:
+                - productId: 2
+                  quantity: 2
+                  parameters: "{\"color\": \"red\", \"size\": \"L\"}"
+        required: true
+      responses:
+        '200':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Order created successfully"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error creating order  
+  /orders/:id:
+    get:
+      summary: Select order by id
+      tags:
+        - Order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the order
+      responses:
+        '200':
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      userId:
+                        type: integer
+                      totalSum:
+                        type: integer
+                        format: decimal
+                        example: 50
+                      name:
+                        type: string
+                      lastname:
+                        type: string
+                      phone:
+                        type: string
+                      deliveryMethod:
+                        type: string
+                      address:
+                        type: string
+                      comment:
+                        type: string
+                      status:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                example:
+                  status: 200
+                  values:
+                    id: 11
+                    userId: 1
+                    totalSum: 60.00
+                    name: John
+                    lastname: Doe
+                    phone: "1234567890"
+                    deliveryMethod: AFTERPAY
+                    address: "123 Main St"
+                    comment: Please deliver in the evening
+                    status: NEW
+                    createdAt: "2024-04-29T22:01:59.000Z"
+                    updatedAt: "2024-04-29T22:02:00.000Z"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+    patch:
+      summary: Update a order by id
+      tags:
+        - Order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                name:
+                  type: string
+                lastname:
+                  type: string
+                phone:
+                  type: string
+                deliveryMethod:
+                  type: string
+                address:
+                  type: string
+                comment:
+                  type: string
+                status:
+                  type: string
+            example:
+              userId: 1
+              name: John
+              lastname: Doe
+              phone: "1234567890"
+              deliveryMethod: AFTERPAY
+              address: "123 Main St"
+              comment: Please deliver in the evening
+              status: NEW
+      responses:
+        '200':
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Order updated successfully"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error updating order
+    delete:
+      summary: Delete a order by id
+      tags:
+        - Order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID of the order
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: string
+                    example: "Deleted 1 order with ID 1"
+        '401':
+          description: Unauthorized user
+        '403':
+          description: Access denied
+        '500':
+          description: Error deleting order
+  /orders/users/:userId:
+    get:
+      summary: Select all orders by user id
+      tags:
+        - Order
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+          description: User id of the selected user's orders
+      responses:
+        '200':
+          description: Successfully selected orders by user id with details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        userId:
+                          type: integer
+                        totalSum:
+                          type: number
+                          format: decimal
+                        name:
+                          type: string
+                        lastname:
+                          type: string
+                        phone:
+                          type: string
+                        deliveryMethod:
+                          type: string
+                        address:
+                          type: string
+                        comment:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        OrderProducts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              quantity:
+                                type: integer
+                              Product:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  titleENG:
+                                    type: string
+                                  titleUA:
+                                    type: string
+                                  descriptionENG:
+                                    type: string
+                                  descriptionUA:
+                                    type: string
+                                  size:
+                                    type: string
+                                  article:
+                                    type: integer
+                                  quantity:
+                                    type: integer
+                                  price:
+                                    type: string
+                                    format: decimal
+                                  price_old:
+                                    type: string
+                                    format: decimal
+                                  categoryId:
+                                    type: integer
+                                  status:
+                                    type: string
+                      example:
+                        id: 12
+                        userId: 11
+                        totalSum: 40.00
+                        name: John
+                        lastname: Doe
+                        phone: "1234567890"
+                        deliveryMethod: AFTERPAY
+                        address: "123 Main St"
+                        comment: Please deliver in the evening
+                        status: NEW
+                        createdAt: "2024-04-29T22:53:39.000Z"
+                        updatedAt: "2024-04-29T22:53:39.000Z"
+                        OrderProducts:
+                          - quantity: 2
+                            Product:
+                              id: 2
+                              titleENG: fdsfsdfsd
+                              titleUA: авіаіваів
+                              descriptionENG: fdsfsdfsdfd
+                              descriptionUA: '432423432'
+                              size: XL
+                              article: 432423432
+                              quantity: 3
+                              price: 20.00
+                              price_old: 15.00
+                              categoryId: 3
+                              status: IN_STOCK
+        '401':
+          description: Unauthorized user

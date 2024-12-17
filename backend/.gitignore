@@ -1,0 +1,7 @@
+node_modules/
+*.log
+.env
+assets/images/categories/*
+assets/images/products/*
+!assets/images/categories/.gitkeep
+!assets/images/products/.gitkeep
